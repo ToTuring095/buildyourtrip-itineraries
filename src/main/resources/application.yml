@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: itinerary-service
+
+services:
+  ai:
+    url: ${AI_SERVICE_URL:http://localhost:8085}
+
+server:
+  port: ${PORT:8082} 
