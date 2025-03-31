@@ -139,4 +139,103 @@ mvn verify
 
 ## Licenza
 
-MIT License - vedere il file [LICENSE](LICENSE) per i dettagli. 
+MIT License - vedere il file [LICENSE](LICENSE) per i dettagli.
+
+## Configurazione degli Ambienti
+
+Il servizio supporta diversi profili di configurazione:
+
+- `local`: Ambiente di sviluppo locale
+- `dev`: Ambiente di sviluppo
+- `prod`: Ambiente di produzione
+- `docker`: Ambiente Docker
+- `k8s`: Ambiente Kubernetes
+
+### Variabili d'Ambiente
+
+Crea un file `.env` basato su `.env.example` con le seguenti variabili:
+
+```bash
+# Server Configuration
+SERVER_PORT=8082
+SPRING_PROFILES_ACTIVE=local
+
+# Database Configuration
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/buildyourtrip
+SPRING_DATASOURCE_USERNAME=postgres
+SPRING_DATASOURCE_PASSWORD=postgres
+SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+# Service URLs
+AI_SERVICE_URL=http://localhost:8085
+
+# Logging Configuration
+LOG_LEVEL=DEBUG
+```
+
+### Profili di Configurazione
+
+#### Local
+- Database: locale
+- Logging: DEBUG
+- Health check: dettagliati
+- SQL logging: attivo
+
+#### Dev
+- Database: dev
+- Logging: INFO
+- Health check: dettagliati
+- SQL logging: attivo
+
+#### Prod
+- Database: prod
+- Logging: WARN
+- Health check: minimi
+- SQL logging: disattivo
+
+#### Docker
+- Database: container
+- Logging: INFO
+- Health check: dettagliati
+- SQL logging: attivo
+
+#### Kubernetes
+- Database: cluster
+- Logging: WARN
+- Health check: minimi
+- SQL logging: disattivo
+
+## Avvio del Servizio
+
+### Localmente
+```bash
+./mvnw spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+### Con Docker
+```bash
+docker-compose up itineraries-service
+```
+
+### In Kubernetes
+```bash
+# Dev
+kubectl apply -f k8s/configmap-dev.yml
+kubectl apply -f k8s/deployment-dev.yml
+
+# Prod
+kubectl apply -f k8s/configmap-prod.yml
+kubectl apply -f k8s/deployment-prod.yml
+```
+
+## ConfigMap Kubernetes
+
+### Dev
+- Configurazioni hardcoded per sviluppo
+- Logging dettagliato
+- Health check dettagliati
+
+### Prod
+- Configurazioni tramite variabili d'ambiente
+- Logging minimo
+- Health check minimi 

@@ -12,7 +12,8 @@ RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 FROM eclipse-temurin:17-jre-alpine
 VOLUME /tmp
 ARG DEPENDENCY=/workspace/app/target/dependency
+RUN apk add --no-cache curl
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.buildyourtrip.itineraries.ItinerariesApplication"] 
+ENTRYPOINT ["java","-cp","app:app/lib/*","it.buildyourtrip.itineraries.ItineraryServiceApplication"] 

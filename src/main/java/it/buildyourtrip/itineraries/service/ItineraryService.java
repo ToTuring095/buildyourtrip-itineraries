@@ -1,7 +1,7 @@
-package com.buildyourtrip.itineraries.service;
+package it.buildyourtrip.itineraries.service;
 
-import com.buildyourtrip.itineraries.domain.Itinerary;
-import com.buildyourtrip.itineraries.repository.ItineraryRepository;
+import it.buildyourtrip.itineraries.domain.Itinerary;
+import it.buildyourtrip.itineraries.repository.ItineraryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class ItineraryService {
     private final ItineraryRepository itineraryRepository;
 
@@ -36,9 +35,12 @@ public class ItineraryService {
 
         itinerary.setTitle(itineraryDetails.getTitle());
         itinerary.setDescription(itineraryDetails.getDescription());
+        itinerary.setDestinations(itineraryDetails.getDestinations());
         itinerary.setStartDate(itineraryDetails.getStartDate());
         itinerary.setEndDate(itineraryDetails.getEndDate());
-        itinerary.setDestination(itineraryDetails.getDestination());
+        itinerary.setStatus(itineraryDetails.getStatus());
+        itinerary.setTotalBudget(itineraryDetails.getTotalBudget());
+        itinerary.setTags(itineraryDetails.getTags());
 
         return itineraryRepository.save(itinerary);
     }
@@ -48,11 +50,13 @@ public class ItineraryService {
         itineraryRepository.deleteById(id);
     }
 
-    public List<Itinerary> getItinerariesByDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
-        return itineraryRepository.findByUserIdAndDateRange(userId, startDate, endDate);
+    public List<Itinerary> searchItinerariesByDestination(String destination) {
+        return itineraryRepository.findByTitleContainingIgnoreCase(destination);
     }
 
-    public List<Itinerary> searchItinerariesByDestination(String destination) {
-        return itineraryRepository.findByDestinationContainingIgnoreCase(destination);
+    public List<Itinerary> getItinerariesByDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+        return itineraryRepository.findByUserIdAndStartDateBetweenAndEndDateBetween(
+            userId, startDate, endDate, startDate, endDate
+        );
     }
 } 

@@ -1,4 +1,4 @@
-package com.buildyourtrip.itineraries.exception;
+package it.buildyourtrip.itineraries.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

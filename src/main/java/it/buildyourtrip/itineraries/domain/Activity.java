@@ -1,4 +1,4 @@
-package com.buildyourtrip.itineraries.domain;
+package it.buildyourtrip.itineraries.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;

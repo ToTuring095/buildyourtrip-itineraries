@@ -1,4 +1,4 @@
-package com.buildyourtrip.itineraries.model;
+package it.buildyourtrip.itineraries.model;
 
 import lombok.Data;
 

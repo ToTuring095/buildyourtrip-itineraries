@@ -1,8 +1,8 @@
-package com.buildyourtrip.itineraries.service;
+package it.buildyourtrip.itineraries.service;
 
-import com.buildyourtrip.itineraries.client.AiServiceClient;
-import com.buildyourtrip.itineraries.model.Destination;
-import com.buildyourtrip.itineraries.model.DestinationPreferences;
+import it.buildyourtrip.itineraries.client.AiServiceClient;
+import it.buildyourtrip.itineraries.model.Destination;
+import it.buildyourtrip.itineraries.model.DestinationPreferences;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -53,9 +53,8 @@ public class DestinationService {
     }
 
     private String buildPromptForDetails(String destination) {
-        return String.format(
-            "Fornisci informazioni dettagliate su %s come destinazione turistica, includendo: " +
-            "descrizione completa, principali attrazioni, periodo migliore per visitare, " +
-            "valutazione turistica e un'immagine rappresentativa.", destination);
+        return "Fornisci dettagli dettagliati sulla destinazione " + destination + 
+               ", includendo: titolo, descrizione completa, punti di interesse principali, " +
+               "valutazione, periodo migliore per visitare e un'immagine rappresentativa.";
     }
 } 

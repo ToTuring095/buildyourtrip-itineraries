@@ -1,7 +1,7 @@
-package com.buildyourtrip.itineraries.controller;
+package it.buildyourtrip.itineraries.controller;
 
-import com.buildyourtrip.itineraries.domain.Itinerary;
-import com.buildyourtrip.itineraries.service.ItineraryService;
+import it.buildyourtrip.itineraries.domain.Itinerary;
+import it.buildyourtrip.itineraries.service.ItineraryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;

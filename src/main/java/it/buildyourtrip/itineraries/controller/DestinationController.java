@@ -1,8 +1,8 @@
-package com.buildyourtrip.itineraries.controller;
+package it.buildyourtrip.itineraries.controller;
 
-import com.buildyourtrip.itineraries.model.Destination;
-import com.buildyourtrip.itineraries.model.DestinationPreferences;
-import com.buildyourtrip.itineraries.service.DestinationService;
+import it.buildyourtrip.itineraries.model.Destination;
+import it.buildyourtrip.itineraries.model.DestinationPreferences;
+import it.buildyourtrip.itineraries.service.DestinationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

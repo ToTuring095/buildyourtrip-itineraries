@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: itineraries-service-config-dev
+  namespace: buildyourtrip-dev
+data:
+  application.yml: |
+    spring:
+      datasource:
+        url: jdbc:postgresql://postgres-itineraries:5432/buildyourtrip
+        username: postgres
+        password: postgres
+      jpa:
+        hibernate:
+          ddl-auto: update
+        show-sql: true
+
+    ai:
+      service:
+        url: http://ai-service:8085
+
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: health,info,metrics,prometheus
+      endpoint:
+        health:
+          show-details: always
+      health:
+        db:
+          enabled: true
+
+    logging:
+      level:
+        com.buildyourtrip.itineraries: INFO
+        org.springframework.web: INFO
+        org.hibernate.SQL: INFO 

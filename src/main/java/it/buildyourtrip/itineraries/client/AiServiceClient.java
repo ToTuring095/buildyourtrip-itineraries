@@ -1,13 +1,13 @@
-package com.buildyourtrip.itineraries.client;
+package it.buildyourtrip.itineraries.client;
 
-import com.buildyourtrip.itineraries.model.Destination;
+import it.buildyourtrip.itineraries.model.Destination;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "ai-service", url = "${services.ai.url}")
+@FeignClient(name = "ai-service", url = "${ai.service.url}")
 public interface AiServiceClient {
 
     @PostMapping("/api/v1/ai/destinations/recommend")
