@@ -5,6 +5,11 @@ metadata:
   namespace: buildyourtrip-dev
 data:
   application.yml: |
+    server:
+      port: 8082
+      servlet:
+        context-path: /api/v1
+
     spring:
       datasource:
         url: jdbc:postgresql://postgres-itineraries:5432/buildyourtrip
@@ -19,17 +24,15 @@ data:
       service:
         url: http://ai-service:8085
 
+    maps:
+      service:
+        url: http://maps-service:8086
+        api-key: ${GOOGLE_MAPS_API_KEY}
+
     management:
-      endpoints:
-        web:
-          exposure:
-            include: health,info,metrics,prometheus
       endpoint:
         health:
           show-details: always
-      health:
-        db:
-          enabled: true
 
     logging:
       level:

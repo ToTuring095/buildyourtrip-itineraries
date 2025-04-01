@@ -1,26 +1,25 @@
 spring:
   datasource:
-    url: jdbc:postgresql://buildyourtrip-postgres-itineraries.buildyourtrip.svc.cluster.local:5432/buildyourtrip
-    username: postgres
-    password: ${DB_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: none
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: false
+    show-sql: false
 
 server:
   port: 8082
+  servlet:
+    context-path: /api/v1
 
 ai:
   service:
-    url: http://buildyourtrip-ai-service.buildyourtrip.svc.cluster.local:8085
+    url: ${AI_SERVICE_URL}
 
 maps:
   service:
-    url: http://buildyourtrip-maps-service.buildyourtrip.svc.cluster.local:8086
+    url: ${MAPS_SERVICE_URL}
     api-key: ${GOOGLE_MAPS_API_KEY}
 
 management:

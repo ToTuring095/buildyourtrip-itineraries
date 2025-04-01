@@ -1,0 +1,35 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /api/v1
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/buildyourtrip_itineraries
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+ai:
+  service:
+    url: http://localhost:8085
+
+maps:
+  service:
+    url: http://localhost:8086
+    api-key: ${GOOGLE_MAPS_API_KEY}
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    it.buildyourtrip.itineraries: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: INFO 
