@@ -1,6 +1,7 @@
 package it.buildyourtrip.itineraries.service;
 
 import it.buildyourtrip.itineraries.domain.Itinerary;
+import it.buildyourtrip.itineraries.model.Destination;
 import it.buildyourtrip.itineraries.repository.ItineraryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class ItineraryService {
 
     @Transactional
     public Itinerary createItinerary(Itinerary itinerary) {
+        calculateItineraryDates(itinerary);
         return itineraryRepository.save(itinerary);
     }
 
@@ -36,11 +38,11 @@ public class ItineraryService {
         itinerary.setTitle(itineraryDetails.getTitle());
         itinerary.setDescription(itineraryDetails.getDescription());
         itinerary.setDestinations(itineraryDetails.getDestinations());
-        itinerary.setStartDate(itineraryDetails.getStartDate());
-        itinerary.setEndDate(itineraryDetails.getEndDate());
         itinerary.setStatus(itineraryDetails.getStatus());
         itinerary.setTotalBudget(itineraryDetails.getTotalBudget());
         itinerary.setTags(itineraryDetails.getTags());
+
+        calculateItineraryDates(itinerary);
 
         return itineraryRepository.save(itinerary);
     }
@@ -58,5 +60,28 @@ public class ItineraryService {
         return itineraryRepository.findByUserIdAndStartDateBetweenAndEndDateBetween(
             userId, startDate, endDate, startDate, endDate
         );
+    }
+
+    private void calculateItineraryDates(Itinerary itinerary) {
+        if (itinerary.getDestinations() == null || itinerary.getDestinations().isEmpty()) {
+            itinerary.setStartDate(LocalDateTime.now());
+            itinerary.setEndDate(LocalDateTime.now());
+            return;
+        }
+
+        LocalDateTime earliestStart = itinerary.getDestinations().stream()
+            .map(Destination::getStartDate)
+            .filter(date -> date != null)
+            .min(LocalDateTime::compareTo)
+            .orElse(LocalDateTime.now());
+
+        LocalDateTime latestEnd = itinerary.getDestinations().stream()
+            .map(Destination::getEndDate)
+            .filter(date -> date != null)
+            .max(LocalDateTime::compareTo)
+            .orElse(LocalDateTime.now());
+
+        itinerary.setStartDate(earliestStart);
+        itinerary.setEndDate(latestEnd);
     }
 } 
